@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
@@ -26,11 +25,6 @@ public class NotesController {
     public ResponseEntity<List<Note>> readNotes(){
         return new ResponseEntity<List<Note>>(nRepo.findAll(), HttpStatus.OK);
     }
-
-//    @PostMapping("/notes")
-//    public ResponseEntity<String> createNote(@RequestParam(name="notes") String note){
-//        return HttpStatus.OK;
-//    }
 
     @PostMapping("/notes")
     public ResponseEntity<Note> createNote(@RequestBody Note note){
@@ -45,6 +39,10 @@ public class NotesController {
     public ResponseEntity<HttpStatus> deleteNote(@PathVariable Long id){
         nRepo.deleteById(id);
         return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
+    }
+    @PutMapping("/notes")
+    public ResponseEntity<Note> updateNote(@RequestBody Note note){
+        return new ResponseEntity<Note>(nRepo.save(note),HttpStatus.OK);
     }
 
 }
